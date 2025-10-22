@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../AuthenticationsElements/AuthContext";
 
 const Navbar = () => {
+
+const {user,logOut}=useContext(AuthContext)
+
+const handleLogout =()=>{
+
+logOut()
+.then(res => console.log(res.user))
+.catch(err => console.log(err.messsage))
+alert("Logout Successfull")
+
+}
+
+
   const links = (
     <>
       <li>
@@ -76,9 +90,17 @@ const Navbar = () => {
 
       {/* Login Button */}
       <div className="navbar-end">
-        <Link to={"/login"} className="btn bg-gradient-to-r from-indigo-500 to-pink-500 text-white border-none hover:scale-105 transition-transform duration-300">
+       {
+        user?   <button
+  onClick={handleLogout}
+  className="px-5 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-indigo-700 transition duration-300 ease-in-out"
+>
+  Logout
+</button>
+    :    <Link to={"/login"} className="btn bg-gradient-to-r from-indigo-500 to-pink-500 text-white border-none hover:scale-105 transition-transform duration-300">
           Login
         </Link>
+       }
       </div>
     </div>
   );

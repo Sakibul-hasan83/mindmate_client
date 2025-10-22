@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "./AuthContext";
 
 const SignUp = () => {
+  const { newUser, logOut } = useContext(AuthContext);
+
   const handleSignUp = (e) => {
     e.preventDefault();
+
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
-    const user = { email, password, confirmPassword };
-    console.log(user);
-  }
+
+    // Check password confirmation
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Create new user
+    newUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        console.log("User created successfully:", user);
+        alert("Account created successfully!");
+        form.reset();
+      })
+      .catch((err) => {
+        console.error("Error creating user:", err.message);
+        alert(err.message);
+      });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-50 via-indigo-50 to-pink-50 px-4">
@@ -87,10 +108,16 @@ const SignUp = () => {
 
             {/* Social SignUp Buttons */}
             <div className="flex flex-col gap-3">
-              <button className="btn btn-outline w-full border-indigo-500 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all duration-300">
+              <button
+                type="button"
+                className="btn btn-outline w-full border-indigo-500 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all duration-300"
+              >
                 Continue with Google
               </button>
-              <button className="btn btn-outline w-full border-pink-500 text-pink-500 hover:bg-pink-50 hover:text-pink-600 rounded-xl transition-all duration-300">
+              <button
+                type="button"
+                className="btn btn-outline w-full border-pink-500 text-pink-500 hover:bg-pink-50 hover:text-pink-600 rounded-xl transition-all duration-300"
+              >
                 Continue with Facebook
               </button>
             </div>
@@ -102,7 +129,6 @@ const SignUp = () => {
                 Log In
               </a>
             </p>
-
           </form>
         </div>
 
