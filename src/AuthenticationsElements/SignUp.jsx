@@ -27,7 +27,7 @@ const SignUp = () => {
         const userData = { email: user.email, uid: user.uid };
 
         axios
-          .post("http://localhost:5000/users", userData)
+          .post("https://your-backend-name.vercel.app/jobs", userData)
           .then((response) => {
             console.log("User saved to database:", response.data);
             alert("Account created successfully!");
