@@ -29,13 +29,13 @@ const SignUp = () => {
         const userData = {
           email: user.email,
           uid: user.uid,
-          displayName: user.displayName || "", // optional
-          photoURL: user.photoURL || "",       // optional
+          displayName: user.displayName || "",
+          photoURL: user.photoURL || "",
         };
 
-        // 3️⃣ Send POST request to backend
+        // 3️⃣ Send POST request to local backend
         axios
-          .post("https://mindmate-chi.vercel.app/users", userData)
+          .post("http://localhost:5000/users", userData)
           .then((response) => {
             console.log("User saved to database:", response.data);
             alert("Account created successfully!");
