@@ -1,37 +1,54 @@
 import React from "react";
 
+import homeBannerLogo from "../assets/homeBannerPhoto.png"
+import homeBannerBackground from "../assets/HomeBannerBg.png"
+
 const HomeBanner = () => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Background Pattern - Behind everything */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        style={{ backgroundImage: `url(${homeBannerBackground})` }}
+      ></div>
       
-      {/* Soft Glowing Circles */}
-      <div className="absolute inset-0 opacity-30 blur-3xl">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply animate-pulse-slow"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply animate-pulse-slow"></div>
-      </div>
+      {/* Hero Section */}
+      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <div className="text-center">
+          {/* Main Heading */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
+            <span className="text-teal-500">Your Mind</span>
+            <span className="text-teal-400 mx-2">✦</span>
+            <span className="text-gray-900">Your Mate.</span>
+          </h1>
 
-      {/* Content Container */}
-      <div className="relative max-w-7xl mx-auto px-6 py-32 text-center sm:text-left">
-        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-          Welcome to MindMate
-        </h1>
-        <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-xl mx-auto sm:mx-0 opacity-90 leading-relaxed">
-          Discover a peaceful space to understand your emotions, improve mental wellness,
-          and grow through daily mindful practices.
-        </p>
-        <div className="mt-10 flex justify-center sm:justify-start gap-4">
-          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all duration-300">
-            Get Started
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            Find Balance in University Life.
+          </h2>
+
+          {/* Description */}
+          <p className="text-gray-700 max-w-2xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base px-4 leading-relaxed">
+            An AI-powered companion providing 24/7 emotional support, personalized coping strategies, and a safe community for students.
+          </p>
+
+          {/* CTA Button */}
+          <button className="px-6 sm:px-8 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all transform hover:scale-105 font-medium shadow-lg text-sm sm:text-base">
+            Get Started - It's Free
           </button>
-          <button className="bg-white/70 hover:bg-white/90 text-purple-600 font-semibold px-6 py-3 rounded-xl shadow-md transition-all duration-300 backdrop-blur-sm">
-            Learn More
-          </button>
+
+          {/* Banner Image */}
+          <div className="mt-8 sm:mt-12 lg:mt-16 flex justify-center">
+            <div className="w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
+              <img 
+                src={homeBannerLogo} 
+                alt="MindMate Banner - Students finding balance" 
+                className="w-full h-auto object-contain"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Floating decorative shapes */}
-      <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply opacity-20 animate-bounce-slow"></div>
-    </section>
+      </section>
+    </div>
   );
 };
 

@@ -1,71 +1,109 @@
-import React from "react";
+import React, { useState } from 'react';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+
+  const handleSubscribe = () => {
+    if (email) {
+      alert("Thank you for subscribing!");
+      setEmail('');
+    }
+  };
+
   return (
-    <footer className="bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 relative overflow-hidden">
+    <footer className="bg-white pt-20 pb-10 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
+      <div className="max-w-7xl mx-auto">
 
-      {/* Soft Glowing Circles Background */}
-      <div className="absolute inset-0 opacity-30 blur-3xl pointer-events-none">
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-40 h-40 sm:w-48 sm:h-48 md:w-48 md:h-48 bg-purple-300 rounded-full mix-blend-multiply"></div>
-        <div className="absolute bottom-10 right-1/2 transform translate-x-1/2 w-44 h-44 sm:w-52 sm:h-52 md:w-52 md:h-52 bg-blue-300 rounded-full mix-blend-multiply"></div>
-      </div>
-
-      {/* Content Container */}
-      <div className="relative max-w-7xl mx-auto px-6 py-16 sm:py-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 sm:gap-16 text-gray-800">
-
-        {/* Brand */}
-        <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-          <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-sm">
-            MindMate
+        {/* ------------------ Newsletter Section ------------------ */}
+        <div className="text-center mb-20">
+          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
+            Join Our Newsletter
           </h2>
-          <p className="mt-4 text-sm sm:text-base leading-7 opacity-90 max-w-xs">
-            A peaceful space to understand your emotions, improve your mental wellness,
-            and grow through daily mindful practices.
+
+          <p className="text-gray-600 text-sm sm:text-base mb-10 max-w-2xl mx-auto">
+            No spam. Just actionable wellness advice and resources curated specifically for students.
+          </p>
+
+          {/* Email Box with Shadow (like design) */}
+          <div className="max-w-xl mx-auto bg-white rounded-xl shadow-md flex items-center px-2 py-2">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 px-4 py-3 text-gray-700 text-sm sm:text-base outline-none"
+            />
+            <button
+              onClick={handleSubscribe}
+              className="bg-[#1e57c9] text-white px-6 py-2 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-700 transition"
+            >
+              Subscribe
+            </button>
+          </div>
+        </div>
+
+        {/* ------------------ Footer Navigation Links ------------------ */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-20 text-center sm:text-left mb-20">
+
+          {/* Features */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4 text-lg">Features</h3>
+            <ul className="space-y-3 text-gray-600 text-sm">
+              <li>AI Chatbot</li>
+              <li>Smart Mood Tracker</li>
+              <li>Peer Support Matching</li>
+              <li>Anonymous Community</li>
+              <li>Wellness Library</li>
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4 text-lg">Resources</h3>
+            <ul className="space-y-3 text-gray-600 text-sm">
+              <li>How It Works</li>
+              <li>FAQ</li>
+              <li>About Us</li>
+              <li>Blog</li>
+              <li>Contact Us</li>
+            </ul>
+          </div>
+
+          {/* Safety & Legal */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4 text-lg">Safety & Legal</h3>
+            <ul className="space-y-3 text-gray-600 text-sm">
+              <li>Privacy Policy</li>
+              <li>Terms of Service</li>
+              <li>Safety Center</li>
+              <li>Crisis Support</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* ------------------ Bottom Section ------------------ */}
+        <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center">
+
+          {/* Icons */}
+          <div className="flex items-center gap-6 mb-4 sm:mb-0">
+            <span className="text-gray-700 hover:text-black cursor-pointer">
+              <i className="fa-brands fa-x-twitter text-xl"></i>
+            </span>
+            <span className="text-gray-700 hover:text-black cursor-pointer">
+              <i className="fa-brands fa-linkedin text-xl"></i>
+            </span>
+            <span className="text-gray-700 hover:text-black cursor-pointer">
+              <i className="fa-brands fa-facebook text-xl"></i>
+            </span>
+          </div>
+
+          {/* Copyright */}
+          <p className="text-gray-500 text-sm">
+            © 2025 MindMate. All Rights Reserved.
           </p>
         </div>
 
-        {/* Explore */}
-        <div className="text-center sm:text-left">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900">Explore</h3>
-          <ul className="space-y-2 text-sm sm:text-base opacity-90">
-            <li><a className="hover:text-purple-600 transition-all duration-200">Dashboard</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Mood Tracking</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">AI Chat</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Community</a></li>
-          </ul>
-        </div>
-
-        {/* Wellness */}
-        <div className="text-center sm:text-left">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900">Wellness Tools</h3>
-          <ul className="space-y-2 text-sm sm:text-base opacity-90">
-            <li><a className="hover:text-purple-600 transition-all duration-200">Wellness Hub</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Goal Planning</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Daily Journals</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Relaxation</a></li>
-          </ul>
-        </div>
-
-        {/* Support */}
-        <div className="text-center sm:text-left">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900">Support</h3>
-          <ul className="space-y-2 text-sm sm:text-base opacity-90">
-            <li><a className="hover:text-purple-600 transition-all duration-200">Privacy Policy</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Terms of Use</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Help Center</a></li>
-            <li><a className="hover:text-purple-600 transition-all duration-200">Contact Us</a></li>
-          </ul>
-        </div>
-
       </div>
-
-      {/* Glass Bottom Bar */}
-      <div className="backdrop-blur-xl bg-white/50 border-t py-4 px-6 sm:px-16">
-        <p className="text-center text-sm sm:text-base text-gray-700 tracking-wide">
-          © {new Date().getFullYear()} MindMate — All Rights Reserved.
-        </p>
-      </div>
-
     </footer>
   );
 };
