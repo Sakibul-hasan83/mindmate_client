@@ -1,108 +1,154 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  // Strong password regex
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
     const form = event.target;
-    const email = form.email.value;
+
+    const email = form.email.value.trim();
     const password = form.password.value;
 
-    const user = { email, password };
-    console.log('Login attempted with:', user);
-    
-    // Add your login logic here
-    // Example: API call, authentication, etc.
+    let newErrors = {};
+
+    // Gmail validation
+    if (!email.endsWith("@gmail.com")) {
+      newErrors.email = "Please enter a valid Gmail address";
+    }
+
+    // Password validation
+    if (!passwordRegex.test(password)) {
+      newErrors.password =
+        "Weak password (8+ chars, upper/lowercase, number & symbol required)";
+    }
+
+    setErrors(newErrors);
+
+    // Success
+    if (Object.keys(newErrors).length === 0) {
+      const user = { email, password };
+      console.log("Login attempted with:", user);
+
+      alert("✅ Login successful!");
+      form.reset();
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-      {/* Avatar Circle */}
+
+      {/* Avatar */}
       <div className="w-16 h-16 bg-gray-300 rounded-full mb-6"></div>
 
       {/* Sign In Card */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-md p-8">
-        <h1 className="text-2xl text-center mb-8 font-bold">Sign in</h1>
+      <div className="bg-white rounded-lg shadow-sm border w-full max-w-md p-8">
 
-        <div className="space-y-4">
-          {/* Email/Phone Input */}
+        <h1 className="text-2xl text-center mb-8 font-bold">
+          Sign in
+        </h1>
+
+        <form onSubmit={handleSubmit} autoComplete="off" className="space-y-4">
+
+          {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm text-gray-600 mb-2">
-              Email or mobile phone number
+            <label className="block text-sm text-gray-600 mb-2">
+              Email address
             </label>
+
             <input
-              type="text"
-              id="email"
+              type="email"
               name="email"
+              autoComplete="off"
+              defaultValue=""
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="input-style"
             />
+
+            {errors.email && (
+              <p className="error">{errors.email}</p>
+            )}
           </div>
 
-          {/* Password Input */}
+          {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-600 mb-2">
+            <label className="block text-sm text-gray-600 mb-2">
               Your password
             </label>
+
             <div className="relative">
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
+                autoComplete="new-password"
+                defaultValue=""
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="input-style pr-16"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700"
               >
-                {showPassword ? 'Hide' : 'Show'}
+                {showPassword ? "Hide" : "Show"}
               </button>
             </div>
+
+            {errors.password && (
+              <p className="error">{errors.password}</p>
+            )}
           </div>
 
-          {/* Log In Button */}
+          {/* Login Button */}
           <button
-            onClick={handleSubmit}
-            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-3 rounded-full transition-colors"
+            type="submit"
+            className="w-full bg-gray-900 hover:bg-black text-white font-medium py-3 rounded-full transition"
           >
             Log in
           </button>
 
-          {/* Terms Text */}
+          {/* Terms */}
           <p className="text-xs text-center text-gray-600">
-            By continuing, you agree to the{' '}
-            <a href="#" className="underline font-medium hover:text-gray-800">
+            By continuing, you agree to the{" "}
+            <span className="underline font-medium cursor-pointer">
               Terms of use
-            </a>{' '}
-            and{' '}
-            <a href="#" className="underline font-medium hover:text-gray-800">
+            </span>{" "}
+            and{" "}
+            <span className="underline font-medium cursor-pointer">
               Privacy Policy
-            </a>
+            </span>
             .
           </p>
 
           {/* Help Links */}
           <div className="flex justify-between text-sm pt-2">
-            <a href="#" className="text-gray-700 underline font-medium hover:text-gray-900">
+            <span className="underline cursor-pointer hover:text-gray-900">
               Other issue with sign in
-            </a>
-            <a href="#" className="text-gray-700 font-medium underline  hover:text-gray-900">
+            </span>
+
+            <span className="underline cursor-pointer hover:text-gray-900">
               Forget your password
-            </a>
+            </span>
           </div>
-        </div>
+
+        </form>
       </div>
 
-      {/* New User Section */}
+      {/* New User */}
       <div className="mt-8 w-full max-w-md">
+
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t"></div>
           </div>
+
           <div className="relative flex justify-center text-sm">
             <span className="px-4 bg-gray-50 text-gray-500">
               New to our community
@@ -110,20 +156,52 @@ const Login = () => {
           </div>
         </div>
 
-        <a href="/signup" className="block">
-          <button className="w-full bg-white hover:bg-gray-50 border-2 border-gray-300 text-gray-700 font-medium py-3 rounded-full transition-colors">
+        <Link to="/signup">
+          <button className="w-full bg-white hover:bg-gray-50 border-2 border-gray-300 text-gray-700 font-medium py-3 rounded-full transition">
             Create an account
           </button>
-        </a>
+        </Link>
+
       </div>
 
-      {/* Footer Links */}
+      {/* Footer */}
       <div className="mt-12 flex gap-6 text-xs text-gray-500">
-        <a href="#" className="hover:underline">Help Center</a>
-        <a href="#" className="hover:underline">Terms of Service</a>
-        <a href="#" className="hover:underline">Privacy Policy</a>
-        <span>@2022gamliudesign</span>
+        <span className="hover:underline cursor-pointer">
+          Help Center
+        </span>
+
+        <span className="hover:underline cursor-pointer">
+          Terms of Service
+        </span>
+
+        <span className="hover:underline cursor-pointer">
+          Privacy Policy
+        </span>
+
+        <span>@2025mindmate</span>
       </div>
+
+      {/* Styles */}
+      <style jsx>{`
+        .input-style {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          outline: none;
+        }
+
+        .input-style:focus {
+          border-color: black;
+        }
+
+        .error {
+          color: red;
+          font-size: 12px;
+          margin-top: 4px;
+        }
+      `}</style>
+
     </div>
   );
 };

@@ -1,171 +1,239 @@
 import React, { useState } from "react";
-import registerLogo from '../assets/Illustration.png';
+import { Link } from "react-router-dom";
+import registerLogo from "../assets/Illustration.png";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  // Strong password regex
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const form = event.target;
-    const firstName = form.firstName.value;
-    const lastName = form.lastName.value;
-    const email = form.email.value;
+
+    const firstName = form.firstName.value.trim();
+    const lastName = form.lastName.value.trim();
+    const email = form.email.value.trim();
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
-      return;
+    let newErrors = {};
+
+    // Gmail validation
+    if (!email.endsWith("@gmail.com")) {
+      newErrors.email = "Please enter a valid Gmail address";
     }
 
-    const user = { firstName, lastName, email, password };
-    console.log(user);
+    // Strong password validation
+    if (!passwordRegex.test(password)) {
+      newErrors.password =
+        "Password must be 8+ chars with uppercase, lowercase, number & symbol";
+    }
 
-    // Here you can add your API call or any other logic
-    alert("Account created successfully!");
+    // Confirm password match
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+
+    // Success
+    if (Object.keys(newErrors).length === 0) {
+      const user = { firstName, lastName, email, password };
+      console.log(user);
+
+      alert("✅ Account created successfully!");
+      form.reset();
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-sm w-full max-w-4xl p-12 relative">
-        <div className="flex gap-12">
-          {/* Left Section - Form */}
-          <div className="flex-1">
-            <div className="w-12 h-12 rounded-full bg-gray-300 mb-6"></div>
 
-            <h1 className="text-3xl font-semibold text-gray-900 mb-2">Create an account</h1>
-            <p className="text-sm text-gray-600 mb-8">
-              Already have an account?{" "}
-              <a href="#" className="text-gray-900 underline font-medium">Log in</a>
-            </p>
+        {/* FORM */}
+        <form onSubmit={handleSubmit} autoComplete="off">
 
-            {/* Form */}
-            <div className="space-y-5">
-              
-              {/* First Name & Last Name */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="firstName" className="block text-xs text-gray-600 mb-2">First name</label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-xs text-gray-600 mb-2">Last name</label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                  />
-                </div>
-              </div>
+          <div className="flex gap-12">
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-xs text-gray-600 mb-2">Email address</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                />
-              </div>
+            {/* LEFT FORM */}
+            <div className="flex-1">
 
-              {/* Password & Confirm Password */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="password" className="block text-xs text-gray-600 mb-2">Password</label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="confirmPassword" className="block text-xs text-gray-600 mb-2">Confirm your password</label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                  />
-                </div>
-              </div>
+              <div className="w-12 h-12 rounded-full bg-gray-300 mb-6"></div>
 
-              <p className="text-xs text-gray-500">
-                Use 8 or more characters with a mix of letters, numbers & symbols
+              <h1 className="text-3xl font-semibold mb-2">
+                Create an account
+              </h1>
+
+              <p className="text-sm text-gray-600 mb-8">
+                Already have an account?{" "}
+                <Link to="/login" className="underline font-medium">
+                  Log in
+                </Link>
               </p>
 
-              {/* Show Password Checkbox */}
-              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={() => setShowPassword(!showPassword)}
-                  className="w-4 h-4 border-2 border-gray-900 rounded cursor-pointer"
-                />
-                <span className="text-gray-900">Show password</span>
-              </label>
+              <div className="space-y-5">
 
+                {/* Name */}
+                <div className="grid grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    name="firstName"
+                    autoComplete="off"
+                    defaultValue=""
+                    placeholder="First name"
+                    required
+                    className="input-style"
+                  />
+
+                  <input
+                    type="text"
+                    name="lastName"
+                    autoComplete="off"
+                    defaultValue=""
+                    placeholder="Last name"
+                    required
+                    className="input-style"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    autoComplete="off"
+                    defaultValue=""
+                    placeholder="Email address"
+                    required
+                    className="input-style"
+                  />
+                  {errors.email && (
+                    <p className="error">{errors.email}</p>
+                  )}
+                </div>
+
+                {/* Password */}
+                <div className="grid grid-cols-2 gap-4">
+
+                  <div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      autoComplete="new-password"
+                      defaultValue=""
+                      placeholder="Password"
+                      required
+                      className="input-style"
+                    />
+                    {errors.password && (
+                      <p className="error">{errors.password}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      autoComplete="new-password"
+                      defaultValue=""
+                      placeholder="Confirm password"
+                      required
+                      className="input-style"
+                    />
+                    {errors.confirmPassword && (
+                      <p className="error">{errors.confirmPassword}</p>
+                    )}
+                  </div>
+
+                </div>
+
+                <p className="text-xs text-gray-500">
+                  Use 8+ characters with uppercase, lowercase, number & symbol
+                </p>
+
+                {/* Show password */}
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    onChange={() => setShowPassword(!showPassword)}
+                  />
+                  Show password
+                </label>
+
+              </div>
             </div>
+
+            {/* RIGHT IMAGE */}
+            <div className="hidden lg:flex flex-1 justify-center items-center">
+              <img
+                src={registerLogo}
+                alt="Register"
+                className="w-[360px] h-[360px] object-contain"
+              />
+            </div>
+
           </div>
 
-          {/* Right Section - Illustration */}
-          <div className="hidden lg:flex flex-col justify-center items-center flex-1">
-            <img 
-              src={registerLogo} 
-              alt="Register Illustration" 
-              className="w-[360px] h-[360px] object-contain mt-8"
-            />
-          </div>
-        </div>
+          {/* BOTTOM */}
+          <div className="flex flex-col-reverse lg:grid lg:grid-cols-4 pt-4 gap-4">
 
-        {/* Log in instead link & Submit Button - Responsive */}
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-4  lg:items-center pt-2 gap-4 ">
-          {/* Log in instead - Left on lg, Bottom on sm/md */}
-       <div>
-           <a href="#" className="text-sm text-gray-900 underline text-center lg:text-left">
-            log in instead
-          </a>
-       </div>
-
-          {/* Create an account button - Center on all screens, Right on lg */}
-          <div className="flex justify-center lg:justify-end lg:col-span-2">
-            <button
-              onClick={handleSubmit}
-              className="bg-gray-300 md:mr-10 hover:bg-gray-400 text-white py-3 px-16 rounded-full transition-colors sm:w-auto"
+            <Link
+              to="/login"
+              className="underline text-sm text-center lg:text-left"
             >
-              Create an account
-            </button>
+              Log in instead
+            </Link>
+
+            <div className="flex justify-center lg:justify-end lg:col-span-2">
+              <button
+                type="submit"
+                className="bg-gray-900 hover:bg-black text-white py-3 px-16 rounded-full transition"
+              >
+                Create an account
+              </button>
+            </div>
+
           </div>
+
+        </form>
+
+        {/* FOOTER */}
+        <div className="absolute bottom-6 left-12 text-sm text-gray-600">
+          English (United States)
         </div>
 
-        {/* Footer */}
-        <div className="mt-6">
-          <div className="absolute bottom-6 left-12 text-sm text-gray-600 flex gap-6">
-            <span>English (United States)</span>
-          </div>
-          
-          <div className="absolute bottom-6 right-12 text-sm text-gray-600 flex gap-6">
-            <a href="#" className="hover:underline">Help</a>
-            <a href="#" className="hover:underline">Privacy</a>
-            <a href="#" className="hover:underline">Terms</a>
-          </div> 
+        <div className="absolute bottom-6 right-12 text-sm text-gray-600 flex gap-6">
+          <span className="hover:underline">Help</span>
+          <span className="hover:underline">Privacy</span>
+          <span className="hover:underline">Terms</span>
         </div>
 
       </div>
+
+      {/* Styles */}
+      <style jsx>{`
+        .input-style {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          outline: none;
+        }
+
+        .input-style:focus {
+          border-color: black;
+        }
+
+        .error {
+          color: red;
+          font-size: 12px;
+          margin-top: 4px;
+        }
+      `}</style>
     </div>
   );
 };
