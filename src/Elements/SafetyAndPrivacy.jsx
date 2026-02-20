@@ -8,102 +8,82 @@ import saftyPhoto6 from '../assets/safty6.png';
 
 const SafetyAndPrivacy = () => {
   return (
-    <div className="relative bg-gradient-to-br from-blue-200 via-white to-yellow-200 py-24 px-4 sm:px-8 overflow-hidden">
-
-      <div className="max-w-5xl mx-auto relative">
+    <div className="relative bg-gradient-to-br from-[#E3F2FF] via-white to-[#FFFBEB] py-20 px-4 overflow-hidden min-h-[650px] flex items-center justify-center">
+      
+      {/* Main Container */}
+      <div className="relative w-full max-w-[320px] sm:max-w-md md:max-w-6xl flex items-center justify-center">
 
         {/* ===== Floating Icons ===== */}
-
+        
         {/* Top Left */}
         <img
           src={saftyPhoto1}
-          alt="icon"
-          className="absolute -top-6 left-4 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float"
+          className="absolute z-30 -top-16 left-0 md:top-[5%] md:left-[8%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float"
+          alt="security-icon-1"
         />
 
         {/* Top Right */}
         <img
           src={saftyPhoto2}
-          alt="icon"
-          className="absolute -top-4 right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float-delayed"
+          className="absolute z-30 -top-14 right-0 md:top-[10%] md:right-[8%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float-delayed"
+          alt="security-icon-2"
         />
 
         {/* Middle Left */}
         <img
           src={saftyPhoto3}
-          alt="icon"
-          className="absolute top-28 -left-2 sm:left-8 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float"
+          className="absolute z-30 top-1/2 -translate-y-1/2 -left-12 md:left-[2%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float"
+          alt="security-icon-3"
         />
 
         {/* Middle Right */}
         <img
           src={saftyPhoto4}
-          alt="icon"
-          className="absolute top-32 right-2 sm:right-10 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float-delayed"
+          className="absolute z-30 top-1/2 -translate-y-1/2 -right-12 md:right-[2%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float-delayed"
+          alt="security-icon-4"
         />
 
         {/* Bottom Left */}
         <img
           src={saftyPhoto5}
-          alt="icon"
-          className="absolute bottom-16 left-4 sm:left-16 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float"
+          className="absolute z-30 -bottom-14 left-0 md:bottom-[5%] md:left-[10%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float-delayed"
+          alt="security-icon-5"
         />
 
         {/* Bottom Right */}
         <img
           src={saftyPhoto6}
-          alt="icon"
-          className="absolute bottom-20 right-8 sm:right-20 w-12 h-12 sm:w-14 sm:h-14 rounded-xl shadow-md bg-white p-2 animate-float-delayed"
+          className="absolute z-30 -bottom-16 right-0 md:bottom-[10%] md:right-[10%] w-10 h-10 md:w-16 md:h-16 rounded-xl shadow-lg bg-white p-1.5 animate-float"
+          alt="security-icon-6"
         />
 
-
-        {/* ===== Center Card ===== */}
-        <div className="relative z-20 bg-white rounded-3xl shadow-2xl p-8 sm:p-12 text-center max-w-xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
-            Your Safety & Privacy is <br /> Our Foundation
+        {/* ===== Center Card (Balanced Width) ===== */}
+        {/* max-w-[250px] for mobile, scaling up to md:max-w-2xl for desktop */}
+        <div className="relative z-20 bg-white rounded-[2.5rem] md:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-7 md:p-20 text-center w-full max-w-[250px] sm:max-w-md md:max-w-2xl border border-white/60">
+          <h2 className="text-lg sm:text-3xl md:text-5xl font-bold text-[#0F172A] leading-tight mb-4">
+            Your Safety & Privacy is <br /> 
+            Our Foundation
           </h2>
 
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-7">
-            We built MindMate with 100% confidentiality at its core.  
-            How you use your account, what you write, and who you talk to is private. Always.
+          <p className="text-slate-500 text-[11px] sm:text-base md:text-lg leading-relaxed mb-6">
+            We built MindMate with 100% confidentiality at its core. Your privacy is our priority.
           </p>
 
-          <button className="bg-black text-white px-7 py-3 rounded-lg text-sm sm:text-base hover:bg-gray-800 transition">
+          <button className="bg-black text-white px-7 md:px-12 py-2.5 md:py-4 rounded-xl font-bold text-xs md:text-lg hover:bg-slate-800 transition-all active:scale-95 shadow-md">
             Read More
           </button>
         </div>
 
-
-        {/* ===== Connecting Lines ===== */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-          <line x1="15%" y1="10%" x2="48%" y2="48%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1="85%" y1="10%" x2="52%" y2="48%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1="18%" y1="52%" x2="45%" y2="52%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1="82%" y1="55%" x2="55%" y2="52%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1="22%" y1="82%" x2="46%" y2="60%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1="78%" y1="82%" x2="54%" y2="60%" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" />
-        </svg>
-
       </div>
 
-
-      {/* ===== Animation CSS ===== */}
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
+          50% { transform: translateY(-10px); }
         }
-
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .animate-float-delayed {
-          animation: float 3s ease-in-out infinite;
-          animation-delay: 1.5s;
-        }
+        .animate-float { animation: float 3.5s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 3.5s ease-in-out infinite; animation-delay: 1.7s; }
       `}</style>
-
     </div>
   );
 };
