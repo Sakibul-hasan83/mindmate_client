@@ -4,60 +4,42 @@ import arrowCurve from "../assets/Vector 6.png";
 
 const CrisisDetection = () => {
   return (
-    <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-lg p-8 sm:p-12 lg:p-16 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <div className="bg-white w-full h-full py-12 px-6 sm:px-16 flex items-center justify-center overflow-hidden">
+      <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        
+        {/* Text Section */}
+        <div className="flex flex-col items-start text-left order-2 lg:order-1">
+          <h2 className="text-4xl sm:text-5xl font-black italic text-[#0f172a] mb-5 tracking-tight leading-tight">
+            Crisis Detection
+          </h2>
+          
+          <p className="text-gray-500 text-base sm:text-lg leading-relaxed mb-8 font-medium max-w-[380px]">
+            Your safety comes first. Our AI recognizes severe distress and 
+            immediately provides direct links to professional help and 24/7 crisis hotlines.
+          </p>
 
-          {/* LEFT SECTION */}
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-bold italic text-gray-900 mb-4">
-              Crisis Detection
-            </h2>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xs mb-8">
-              Your safety comes first. Our AI is trained to recognize language indicating severe distress or a crisis. It will automatically and immediately present you with direct, one-click links to professional help, such as 24/7 crisis hotlines and emergency resources.
-            </p>
-
-            {/* Button + Arrow */}
-            <div className="flex items-start gap-3 relative">
-              <button className="bg-teal-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-teal-600 transition">
-                Learn More
-              </button>
-              <img
-                src={arrowCurve}
-                alt="arrow"
-                className="w-20 opacity-90 select-none relative top-3"
-              />
-            </div>
-          </div>
-
-          {/* RIGHT IMAGE */}
-          <div className="flex justify-center">
+          <div className="relative inline-flex items-center">
+            <button className="bg-[#14b8a6] text-white px-8 py-3 rounded-xl text-lg font-bold hover:bg-[#0d9488] transition-all shadow-md active:scale-95">
+              Learn More
+            </button>
+            
             <img
-              src={crisisDetectionPhoto}
-              alt="Crisis Detection"
-              className="w-60 sm:w-72 lg:w-80 object-contain"
+              src={arrowCurve}
+              alt="arrow decoration"
+              className="absolute left-[105%] top-0 w-20 h-auto object-contain hidden md:block opacity-70"
             />
           </div>
         </div>
 
-        {/* Bottom center floating button */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-          <button className="bg-teal-400 w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-teal-500 transition">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M8 4l8 8-8 8" />
-            </svg>
-          </button>
+        {/* Image Section - Small & Responsive */}
+        <div className="w-full flex justify-center lg:justify-end order-1 lg:order-2">
+          <img
+            src={crisisDetectionPhoto}
+            alt="Crisis Detection Illustration"
+            // Matching the small size: mobile 160px, tablet 220px, desktop 280px
+            className="w-[160px] sm:w-[220px] lg:w-[280px] h-auto object-contain drop-shadow-sm"
+          />
         </div>
-
       </div>
     </div>
   );

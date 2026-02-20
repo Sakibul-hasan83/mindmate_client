@@ -1,4 +1,7 @@
 import React from "react";
+import SectionTitle from "../ShareElements/SectionTitle";
+
+// Import your assets
 import presure1 from "../assets/presure1.png";
 import presure2 from "../assets/presure2.png";
 import presure3 from "../assets/presure3.png";
@@ -20,35 +23,33 @@ const Pressure = () => {
   return (
     <div className="py-16 bg-white px-4">
       {/* Header */}
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-          University pressure is real. You're not alone.
-        </h2>
-        <p className="text-gray-600 mt-3 text-sm md:text-base">
-          Supporting Students Through Stress, Anxiety, and the Challenges of Modern Academic Life.
-        </p>
+      <div className="max-w-4xl mx-auto text-center mb-16">
+        <SectionTitle
+          heading="University pressure is real. You're not alone."
+          subHeading="Supporting Students Through Stress, Anxiety, and the Challenges of Modern Academic Life."
+        />
       </div>
 
-      {/* Layout */}
-      <div className="mt-14 flex flex-col items-center gap-10 w-full">
-
-        {/* TOP — 2 Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-5xl">
-          {cards.slice(0, 2).map((data, i) => (
-            <Card key={i} title={data.title} img={data.img} />
+      <div className="max-w-7xl mx-auto flex flex-col gap-6">
+        {/* ROW 1: 2 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-0 md:px-20">
+          {cards.slice(0, 2).map((card, i) => (
+            <Card key={i} title={card.title} img={card.img} />
           ))}
         </div>
 
-        {/* MIDDLE — 3 Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-          {cards.slice(2, 5).map((data, i) => (
-            <Card key={i} title={data.title} img={data.img} />
+        {/* ROW 2: 3 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {cards.slice(2, 5).map((card, i) => (
+            <Card key={i} title={card.title} img={card.img} />
           ))}
         </div>
 
-        {/* BOTTOM — 1 Card */}
-        <div className="flex justify-center w-full">
-          <Card title={cards[5].title} img={cards[5].img} />
+        {/* ROW 3: 1 Card (Centered) */}
+        <div className="flex justify-center">
+          <div className="w-full md:w-1/3">
+             <Card title={cards[5].title} img={cards[5].img} />
+          </div>
         </div>
       </div>
     </div>
@@ -57,33 +58,34 @@ const Pressure = () => {
 
 const Card = ({ title, img }) => {
   return (
-    <div className="w-full max-w-[350px] min-h-[260px] bg-white border rounded-3xl shadow-md 
-    hover:shadow-xl transition-all p-6 flex flex-col justify-between hover:-translate-y-1">
-
-      {/* Title */}
-      <p className="font-semibold text-gray-900 text-sm leading-snug md:text-base">
-        <span className="bg-lime-200 px-1 rounded">
-          {title}
-        </span>
-      </p>
-
-      {/* FIXED CLEAN IMAGE */}
-      <div className="w-full h-36 rounded-xl bg-white overflow-hidden flex items-center justify-center mt-3">
-        <img 
-          src={img} 
-          alt={title} 
-          className="w-full h-full object-contain"
-        />
+    <div className="bg-[#F3F4F1] border-2 border-black rounded-[40px] p-8 flex justify-between items-center shadow-[0px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all h-full min-h-[180px]">
+      
+      {/* Left Side: Content */}
+      <div className="flex flex-col justify-between h-full gap-6 max-w-[60%]">
+        <h3 className="text-lg font-bold leading-tight">
+          <span className="bg-[#B1FF33] px-1 py-0.5 rounded-sm">
+            {title}
+          </span>
+        </h3>
+        
+        <button className="flex items-center gap-3 group">
+          {/* Black Circle with Green Arrow Icon */}
+          <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center transition-transform group-hover:rotate-45">
+            <img 
+              src={arrow} 
+              alt="arrow" 
+              className="w-5 h-5" 
+              style={{ filter: 'invert(87%) sepia(45%) saturate(1224%) hue-rotate(36deg) brightness(105%) contrast(105%)' }} 
+            />
+          </div>
+          <span className="font-bold text-black text-lg">Learn more</span>
+        </button>
       </div>
 
-      {/* Learn More Button */}
-      <button className="flex items-center gap-2 text-black font-medium mt-4 group">
-        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center 
-        transition-transform group-hover:scale-110">
-          <img src={arrow} alt="arrow" className="w-4 h-4 group-hover:translate-x-1 transition" />
-        </div>
-        <span className="text-sm md:text-base">Learn more</span>
-      </button>
+      {/* Right Side: Image */}
+      <div className="w-28 h-28 flex items-center justify-center">
+        <img src={img} alt="" className="max-w-full max-h-full object-contain" />
+      </div>
     </div>
   );
 };

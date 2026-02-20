@@ -10,6 +10,7 @@ import SmartMoodTracker from "../Elements/SmartMoodTracker";
 import WelnessChatbot from "../Elements/WelnessChatbot";
 import HomeBanner from "./HomeBanner";
 import MindMateCommunity from "./MindMindCommunity";
+import MindMateFeatures from "../MindMateFeatures/MindMateFeatures";
 
 
 
@@ -21,11 +22,14 @@ const Home = () => {
     <HomeBanner></HomeBanner>
     <MindMateCommunity></MindMateCommunity>
     <Pressure></Pressure>
-    <WelnessChatbot></WelnessChatbot>
-    <SmartMoodTracker></SmartMoodTracker>
-    <PeerSupport></PeerSupport>
-    <PeerCommunity></PeerCommunity>
-    <CrisisDetection></CrisisDetection>
+    {/* <WelnessChatbot></WelnessChatbot> */}
+    {/* <SmartMoodTracker></SmartMoodTracker> */}
+    {/* <PeerSupport></PeerSupport> */}
+    {/* <PeerCommunity></PeerCommunity> */}
+    {/* <CrisisDetection></CrisisDetection> */}
+
+<MindMateFeatures></MindMateFeatures>
+
     <SafetyAndPrivacy></SafetyAndPrivacy>
     <CalmerMind></CalmerMind>
     <Questions></Questions>

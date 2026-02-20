@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { sendEmailVerification } from "firebase/auth";
 import registerLogo from "../assets/Illustration.png";
 import AuthContext from "../Authentications/AuthContext";
 
@@ -30,15 +29,18 @@ const SignUp = () => {
 
     let newErrors = {};
 
+    // Email validation
     if (!email.endsWith("@gmail.com")) {
       newErrors.email = "Please enter a valid Gmail address";
     }
 
+    // Password validation
     if (!passwordRegex.test(password)) {
       newErrors.password =
         "Password must be 8+ chars with uppercase, lowercase, number & symbol";
     }
 
+    // Confirm password validation
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
@@ -50,12 +52,9 @@ const SignUp = () => {
     try {
       setLoading(true);
 
-      const result = await newUser(email, password);
+      await newUser(email, password);
 
-      // ✅ Send verification email
-      await sendEmailVerification(result.user);
-
-      // ✅ Logout immediately
+      // logout after account creation
       await logout();
 
       setVerifyMessage(
@@ -71,14 +70,23 @@ const SignUp = () => {
         case "auth/email-already-in-use":
           setFirebaseError("This email is already registered. Please login.");
           break;
+
         case "auth/invalid-email":
           setFirebaseError("Invalid email format.");
           break;
+
         case "auth/weak-password":
           setFirebaseError("Password is too weak.");
           break;
+
+        case "auth/too-many-requests":
+          setFirebaseError(
+            "Too many attempts. Please wait a few minutes and try again."
+          );
+          break;
+
         default:
-          setFirebaseError(error.message);
+          setFirebaseError("Something went wrong. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -103,7 +111,6 @@ const SignUp = () => {
               </p>
 
               <div className="space-y-5">
-
                 <div>
                   <input
                     type="email"
