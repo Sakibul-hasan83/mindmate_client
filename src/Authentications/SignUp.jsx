@@ -1,211 +1,123 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import registerLogo from "../assets/Illustration.png";
-import AuthContext from "../Authentications/AuthContext";
+import registerLogo from "../assets/Illustration.png"; 
+import { AuthContext } from "../Authentications/AuthProvider";
+import { updateProfile, sendEmailVerification } from "firebase/auth"; 
 
 const SignUp = () => {
   const { newUser, logout } = useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
   const [firebaseError, setFirebaseError] = useState("");
   const [verifyMessage, setVerifyMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     setFirebaseError("");
-    setErrors({});
-    setVerifyMessage("");
-
+    setVerifyMessage(""); // নতুন সাবমিটের আগে মেসেজ ক্লিয়ার করা
+    
     const form = event.target;
+    const firstName = form.firstName.value.trim();
+    const lastName = form.lastName.value.trim();
     const email = form.email.value.trim();
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
-    let newErrors = {};
-
-    // Email validation
-    if (!email.endsWith("@gmail.com")) {
-      newErrors.email = "Please enter a valid Gmail address";
-    }
-
-    // Password validation
-    if (!passwordRegex.test(password)) {
-      newErrors.password =
-        "Password must be 8+ chars with uppercase, lowercase, number & symbol";
-    }
-
-    // Confirm password validation
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      setFirebaseError("Passwords do not match");
+      return;
     }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length !== 0) return;
 
     try {
       setLoading(true);
+      
+      // ১. Firebase-এ ইউজার তৈরি করা
+      const result = await newUser(email, password);
+      
+      // ২. ভেরিফিকেশন মেইল পাঠানো
+      await sendEmailVerification(result.user);
+      
+      // ৩. প্রোফাইল নাম আপডেট করা
+      await updateProfile(result.user, {
+        displayName: `${firstName} ${lastName}`,
+      });
 
-      await newUser(email, password);
-
-      // logout after account creation
+      // ৪. ইউজারকে লগআউট করিয়ে দেওয়া যাতে ভেরিফাই না করা পর্যন্ত ঢুকতে না পারে
       await logout();
-
-      setVerifyMessage(
-        "📩 Account created! Please check your email and verify before logging in."
-      );
-
+      
+      setVerifyMessage("📩 Account created! Please check your email to verify.");
       form.reset();
-
     } catch (error) {
-      console.log("Firebase Error:", error.code);
-
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          setFirebaseError("This email is already registered. Please login.");
-          break;
-
-        case "auth/invalid-email":
-          setFirebaseError("Invalid email format.");
-          break;
-
-        case "auth/weak-password":
-          setFirebaseError("Password is too weak.");
-          break;
-
-        case "auth/too-many-requests":
-          setFirebaseError(
-            "Too many attempts. Please wait a few minutes and try again."
-          );
-          break;
-
-        default:
-          setFirebaseError("Something went wrong. Please try again.");
-      }
+      console.error(error); // কনসোলে এরর চেক করুন
+      setFirebaseError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-sm w-full max-w-4xl p-12">
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="flex gap-12">
-            <div className="flex-1">
-              <h1 className="text-3xl font-semibold mb-2">
-                Create an account
-              </h1>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 font-sans">
+      <div className="w-full max-w-[1000px] bg-white rounded-3xl p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-16 border border-gray-50 shadow-sm">
+        
+        <div className="flex-1 w-full max-w-md">
+          <div className="mb-10 text-left">
+            <div className="w-14 h-14 bg-[#d1d5db] rounded-full mb-8"></div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Create an account</h1>
+            <p className="text-[15px] text-gray-600">
+              Already have an account? <Link to="/login" className="text-black font-semibold underline decoration-1 underline-offset-4">Log in</Link>
+            </p>
+          </div>
 
-              <p className="text-sm text-gray-600 mb-8">
-                Already have an account?{" "}
-                <Link to="/login" className="underline font-medium">
-                  Log in
-                </Link>
-              </p>
-
-              <div className="space-y-5">
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                    required
-                    className="input-style"
-                  />
-                  {errors.email && <p className="error">{errors.email}</p>}
-                </div>
-
-                <div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    required
-                    className="input-style"
-                  />
-                  {errors.password && (
-                    <p className="error">{errors.password}</p>
-                  )}
-                </div>
-
-                <div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm password"
-                    required
-                    className="input-style"
-                  />
-                  {errors.confirmPassword && (
-                    <p className="error">{errors.confirmPassword}</p>
-                  )}
-                </div>
-
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    onChange={() => setShowPassword(!showPassword)}
-                  />
-                  Show password
-                </label>
-
-                {firebaseError && (
-                  <p className="error text-center">{firebaseError}</p>
-                )}
-
-                {verifyMessage && (
-                  <div className="bg-green-100 text-green-700 p-3 rounded text-sm">
-                    {verifyMessage}
-                  </div>
-                )}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-[13px] font-medium text-gray-700">First name</label>
+                <input name="firstName" required className="border border-gray-300 rounded-md p-3 text-sm outline-none focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-[13px] font-medium text-gray-700">Last name</label>
+                <input name="lastName" required className="border border-gray-300 rounded-lg p-3 text-sm outline-none focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]" />
               </div>
             </div>
 
-            <div className="hidden lg:flex flex-1 justify-center items-center">
-              <img
-                src={registerLogo}
-                alt="Register"
-                className="w-[360px] h-[360px] object-contain"
-              />
+            <div className="flex flex-col gap-2">
+              <label className="text-[13px] font-medium text-gray-700">Email address</label>
+              <input name="email" type="email" required className="border border-gray-300 rounded-md p-3 text-sm outline-none focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]" />
             </div>
-          </div>
 
-          <div className="flex justify-center pt-8">
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-gray-900 hover:bg-black text-white py-3 px-16 rounded-full transition disabled:opacity-50"
-            >
-              {loading ? "Creating..." : "Create an account"}
-            </button>
-          </div>
-        </form>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-[13px] font-medium text-gray-700">Password</label>
+                <input name="password" type={showPassword ? "text" : "password"} required className="border border-gray-300 rounded-md p-3 text-sm outline-none focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-[13px] font-medium text-gray-700">Confirm your password</label>
+                <input name="confirmPassword" type={showPassword ? "text" : "password"} required className="border border-gray-300 rounded-md p-3 text-sm outline-none focus:border-[#14b8a6] focus:ring-1 focus:ring-[#14b8a6]" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 mt-4">
+              <input type="checkbox" id="show" onChange={() => setShowPassword(!showPassword)} className="w-4 h-4 rounded border-gray-300 text-[#14b8a6] focus:ring-[#14b8a6]" />
+              <label htmlFor="show" className="text-[13px] text-gray-700 cursor-pointer">Show password</label>
+            </div>
+
+            <div className="pt-6 flex flex-col items-start gap-6">
+              <button type="submit" disabled={loading} className="w-full lg:w-auto px-12 bg-[#14b8a6] hover:bg-[#0d9488] text-white font-bold py-3.5 rounded-full transition-all duration-300 text-[15px] shadow-sm">
+                {loading ? "Creating..." : "Create an account"}
+              </button>
+              <Link to="/login" className="text-[14px] text-black font-semibold underline decoration-1 underline-offset-4">log in instead</Link>
+            </div>
+          </form>
+
+          {verifyMessage && <p className="mt-6 text-teal-600 text-sm font-medium bg-teal-50 p-3 rounded-lg text-center">{verifyMessage}</p>}
+          {firebaseError && <p className="mt-6 text-red-500 text-sm font-medium bg-red-50 p-3 rounded-lg text-center">{firebaseError}</p>}
+        </div>
+
+        <div className="flex-1 hidden lg:flex justify-center items-center">
+          <img src={registerLogo} alt="Illustration" className="max-w-[450px] w-full h-auto object-contain" />
+        </div>
       </div>
-
-      <style>{`
-        .input-style {
-          width: 100%;
-          padding: 12px;
-          border: 1px solid #d1d5db;
-          border-radius: 8px;
-          outline: none;
-        }
-        .input-style:focus {
-          border-color: black;
-        }
-        .error {
-          color: red;
-          font-size: 12px;
-          margin-top: 4px;
-        }
-      `}</style>
     </div>
   );
 };

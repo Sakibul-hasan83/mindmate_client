@@ -5,7 +5,7 @@ import Footer from '../ShareElements/Footer';
 
 const Layout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
           <Navbar></Navbar>
                <Outlet></Outlet>
         <Footer></Footer>

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import AuthContext from "./AuthContext";
+import React, { createContext, useEffect, useState } from "react";
 import auth from "./firebase.config";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,66 +8,37 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 
+// Ekhane context create korun ebong MUST export korun
+export const AuthContext = createContext(null);
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
 
-  // 🔹 Create New User + Send Email Verification
-  const newUser = async (email, password) => {
+  const newUser = (email, password) => {
     setLoader(true);
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(result.user);
-      return result;
-    } catch (error) {
-      throw error;
-    } finally {
-      setLoader(false);
-    }
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // 🔹 Login User
-  const Login = async (email, password) => {
+  const Login = (email, password) => {
     setLoader(true);
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      return result;
-    } catch (error) {
-      throw error;
-    } finally {
-      setLoader(false);
-    }
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // 🔹 Logout User
-  const logout = async () => {
+  const logout = () => {
     setLoader(true);
-    try {
-      await signOut(auth);
-    } catch (error) {
-      throw error;
-    } finally {
-      setLoader(false);
-    }
+    return signOut(auth);
   };
 
-  // 🔹 Observe Auth State
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoader(false);
     });
-
     return () => unSubscribe();
   }, []);
 
-  const AuthInfo = {
-    user,
-    loader,
-    newUser,
-    Login,
-    logout,
-  };
+  const AuthInfo = { user, loader, newUser, Login, logout };
 
   return (
     <AuthContext.Provider value={AuthInfo}>
