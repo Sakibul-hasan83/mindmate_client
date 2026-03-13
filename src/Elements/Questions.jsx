@@ -31,14 +31,15 @@ const Questions = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+    /* Main container updated with dark mode background */
+    <div className="bg-gray-50 dark:bg-[#0f172a] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base transition-colors">
             Here are answers to some common questions students have about MindMate.
           </p>
         </div>
@@ -48,41 +49,37 @@ const Questions = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300"
+              /* Card styles updated for dark mode */
+              className="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300"
             >
-              {/* Question */}
+              {/* Question button */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-4 sm:px-8 sm:py-5 flex items-center justify-between text-left hover:bg-gray-50 transition"
+                className="w-full px-6 py-4 sm:px-8 sm:py-5 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-[#2d3748] transition"
               >
-                <span className="font-medium text-gray-900 text-sm sm:text-base pr-4">
+                <span className="font-medium text-gray-900 dark:text-gray-100 text-sm sm:text-base pr-4 transition-colors">
                   {index + 1}. {faq.question}
                 </span>
                 <svg
-                  className={`w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0 ${
-                    openIndex === index ? 'transform rotate-180' : ''
+                  className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-300 flex-shrink-0 ${
+                    openIndex === index ? 'rotate-180' : ''
                   }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
 
-              {/* Answer */}
+              {/* Answer section */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
                 <div className="px-6 pb-5 sm:px-8 sm:pb-6 pt-0">
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed transition-colors">
                     {faq.answer}
                   </p>
                 </div>

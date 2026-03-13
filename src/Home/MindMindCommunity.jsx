@@ -14,7 +14,6 @@ const MindMateCommunity = () => {
     { id: 8, text: "Accessibility in design", details: "As someone with ADHD, I appreciate how clean the UI is.", author: "Ellie Cones", role: "Student", rating: 5, avatar: "E" }
   ];
 
-  // Duplicating items to ensure a seamless "gapless" loop
   const row1 = [...testimonials.slice(0, 4), ...testimonials.slice(0, 4)];
   const row2 = [...testimonials.slice(4, 8), ...testimonials.slice(4, 8)];
   const row3 = [...testimonials, ...testimonials];
@@ -24,8 +23,6 @@ const MindMateCommunity = () => {
       <motion.div
         className="flex gap-6 flex-nowrap"
         animate={{
-          // Moving by -50% ensures that the second half of the duplicated list 
-          // perfectly replaces the first half, creating an infinite loop.
           x: direction === "left" ? [0, "-50%"] : ["-50%", 0],
         }}
         transition={{
@@ -39,9 +36,10 @@ const MindMateCommunity = () => {
         style={{ width: "max-content" }}
       >
         {items.map((item, index) => (
+          /* Updated Card: Added dark:bg-[#1e293b] and dark:border-gray-800 */
           <div
             key={`${item.id}-${index}`}
-            className="w-[300px] sm:w-[350px] bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex-shrink-0"
+            className="w-[300px] sm:w-[350px] bg-white dark:bg-[#1e293b] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex-shrink-0 transition-colors duration-300"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -49,14 +47,16 @@ const MindMateCommunity = () => {
                   {item.avatar}
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">{item.author}</p>
+                  {/* Updated Text: Added dark:text-white */}
+                  <p className="font-bold text-gray-900 dark:text-white text-sm">{item.author}</p>
                   <p className="text-xs text-gray-400">{item.role || "Student"}</p>
                 </div>
               </div>
               <div className="text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
             </div>
-            <h3 className="font-bold text-gray-900 mb-2 text-sm italic">"{item.text}"</h3>
-            <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">{item.details}</p>
+            {/* Updated Text: Added dark:text-gray-200 */}
+            <h3 className="font-bold text-gray-900 dark:text-gray-200 mb-2 text-sm italic">"{item.text}"</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3">{item.details}</p>
           </div>
         ))}
       </motion.div>
@@ -64,7 +64,8 @@ const MindMateCommunity = () => {
   );
 
   return (
-    <div className="bg-gray-50 py-12 sm:py-20 overflow-hidden relative">
+    /* Background Update: Added dark:bg-[#0f172a] */
+    <div className="bg-gray-50 dark:bg-[#0f172a] py-12 sm:py-20 overflow-hidden relative transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 mb-12">
         <SectionTitle 
           subHeading={"MindMate Community 👋"}
@@ -72,18 +73,13 @@ const MindMateCommunity = () => {
         />
       </div>
 
-      {/* Row 1: Leftward Movement */}
       <MarqueeRow items={row1} direction="left" speed={30} />
-
-      {/* Row 2: Rightward Movement */}
       <MarqueeRow items={row2} direction="right" speed={35} />
-
-      {/* Row 3: Leftward Movement */}
       <MarqueeRow items={row3} direction="left" speed={38} />
 
-      {/* Side Gradients for Smooth Fade Out */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+      {/* Side Gradients: Updated to match dark background using dark:from-[#0f172a] */}
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-50 dark:from-[#0f172a] to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50 dark:from-[#0f172a] to-transparent z-10 pointer-events-none" />
     </div>
   );
 };

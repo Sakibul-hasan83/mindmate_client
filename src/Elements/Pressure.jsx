@@ -21,7 +21,8 @@ const cards = [
 
 const Pressure = () => {
   return (
-    <div className="py-16 bg-white px-4">
+    /* Changed bg-white to support dark mode */
+    <div className="py-16 bg-white dark:bg-[#0f172a] px-4 transition-colors duration-300">
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center mb-16">
         <SectionTitle
@@ -58,19 +59,24 @@ const Pressure = () => {
 
 const Card = ({ title, img }) => {
   return (
-    <div className="bg-[#F3F4F1] border-2 border-black rounded-[40px] p-8 flex justify-between items-center shadow-[0px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all h-full min-h-[180px]">
+    /* Updated Card: 
+       - Light Mode: bg-[#F3F4F1] with black shadow
+       - Dark Mode: bg-[#1e293b] with teal-500 shadow or darker border
+    */
+    <div className="bg-[#F3F4F1] dark:bg-[#1e293b] border-2 border-black dark:border-gray-700 rounded-[40px] p-8 flex justify-between items-center shadow-[0px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[0px_6px_0px_0px_rgba(20,184,166,0.5)] hover:shadow-none transition-all h-full min-h-[180px]">
       
       {/* Left Side: Content */}
       <div className="flex flex-col justify-between h-full gap-6 max-w-[60%]">
         <h3 className="text-lg font-bold leading-tight">
-          <span className="bg-[#B1FF33] px-1 py-0.5 rounded-sm">
+          {/* Highlighted text: Adjusted background for dark mode readability */}
+          <span className="bg-[#B1FF33] dark:bg-teal-500 text-black dark:text-white px-2 py-0.5 rounded-sm transition-colors">
             {title}
           </span>
         </h3>
         
         <button className="flex items-center gap-3 group">
           {/* Black Circle with Green Arrow Icon */}
-          <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center transition-transform group-hover:rotate-45">
+          <div className="w-10 h-10 rounded-full bg-black dark:bg-teal-500 flex items-center justify-center transition-transform group-hover:rotate-45">
             <img 
               src={arrow} 
               alt="arrow" 
@@ -78,13 +84,14 @@ const Card = ({ title, img }) => {
               style={{ filter: 'invert(87%) sepia(45%) saturate(1224%) hue-rotate(36deg) brightness(105%) contrast(105%)' }} 
             />
           </div>
-          <span className="font-bold text-black text-lg">Learn more</span>
+          <span className="font-bold text-black dark:text-white text-lg transition-colors">Learn more</span>
         </button>
       </div>
 
       {/* Right Side: Image */}
       <div className="w-28 h-28 flex items-center justify-center">
-        <img src={img} alt="" className="max-w-full max-h-full object-contain" />
+        {/* Images might need slight brightness adjustment in dark mode if they are too dark */}
+        <img src={img} alt="" className="max-w-full max-h-full object-contain dark:brightness-110 transition-all" />
       </div>
     </div>
   );
