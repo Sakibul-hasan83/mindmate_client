@@ -18,6 +18,7 @@ import Meditation from "./src/DashBoradElements/WellnessToolsElements/Meditation
 import Breathing from "./src/DashBoradElements/WellnessToolsElements/Breathing";
 import CBTTools from "./src/DashBoradElements/WellnessToolsElements/CBTTools";
 import Journal from "./src/DashBoradElements/WellnessToolsElements/Journal";
+import Progress from "./src/DashBoradElements/DataAndInsightsElemets/Progress";
 
 
 const router = createBrowserRouter([
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
         {
             path:"/journal",
             element:<Journal></Journal>
+        },
+        {
+            path:"/progress",
+            element:<Progress></Progress>
         },
         
     
