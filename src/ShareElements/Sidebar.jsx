@@ -3,7 +3,9 @@ import { NavLink } from "react-router-dom";
 import { 
   FiHome, FiMessageSquare, FiSmile, FiUsers, FiMail, FiBarChart2, 
   FiLogOut, FiActivity, FiTarget, FiAward, FiBookOpen, 
-  FiHeadphones, FiWind, FiFileText, FiEdit3, FiTrendingUp 
+  FiHeadphones, FiWind, FiFileText, FiEdit3, FiTrendingUp, FiShield,
+  FiGlobe, FiUserPlus, FiBookmark, FiCalendar, FiBriefcase,
+  FiAlertCircle, FiSearch, FiSettings, FiBell, FiImage, FiUser, FiLayers
 } from "react-icons/fi";
 import navbarLogoBrain from "../assets/navbarLogo.png";
 
@@ -23,28 +25,53 @@ const Sidebar = ({ isCollapsed, logout }) => {
 
       {/* Menu Area */}
       <div className="flex-1 py-6 px-3 flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+        
+        {/* Main Section */}
         <SidebarItem icon={<FiHome />} label="Home" isCollapsed={isCollapsed} to="/" />
         <SidebarItem icon={<FiMessageSquare />} label="AI Chat" isCollapsed={isCollapsed} to="/aichat" badge="AI" />
         <SidebarItem icon={<FiSmile />} label="Mood" isCollapsed={isCollapsed} to="/mood" />
         <SidebarItem icon={<FiUsers />} label="Community" isCollapsed={isCollapsed} to="/community" />
         <SidebarItem icon={<FiMail />} label="Messages" isCollapsed={isCollapsed} to="/messages" />
 
+        {/* Insights Section */}
         <SidebarSection label="Insights" isCollapsed={isCollapsed} />
         <SidebarItem icon={<FiBarChart2 />} label="Mood Analytics" isCollapsed={isCollapsed} to="/moodanalytics" />
         <SidebarItem icon={<FiActivity />} label="AI Insights" isCollapsed={isCollapsed} to="/aiinsights" />
-        
-     
         <SidebarItem icon={<FiTrendingUp />} label="Progress" isCollapsed={isCollapsed} to="/progress" />
-        
         <SidebarItem icon={<FiTarget />} label="Goals" isCollapsed={isCollapsed} to="/goals" />
         <SidebarItem icon={<FiAward />} label="Rewards" isCollapsed={isCollapsed} to="/rewards" />
 
+        {/* Wellness Section */}
         <SidebarSection label="Wellness" isCollapsed={isCollapsed} />
         <SidebarItem icon={<FiBookOpen />} label="Library" isCollapsed={isCollapsed} to="/library" />
         <SidebarItem icon={<FiHeadphones />} label="Meditation" isCollapsed={isCollapsed} to="/meditation" />
         <SidebarItem icon={<FiWind />} label="Breathing" isCollapsed={isCollapsed} to="/breathing" />
         <SidebarItem icon={<FiFileText />} label="CBT Tools" isCollapsed={isCollapsed} to="/cbttools" />
         <SidebarItem icon={<FiEdit3 />} label="Journal" isCollapsed={isCollapsed} to="/journal" />
+        <SidebarItem icon={<FiShield />} label="Safety Plan" isCollapsed={isCollapsed} to="/safetyplan" />
+
+        {/* Social Section */}
+        <SidebarSection label="Social" isCollapsed={isCollapsed} />
+        <SidebarItem icon={<FiGlobe />} label="Social Hub" isCollapsed={isCollapsed} to="/socialhub" />
+        {/* FiTrophy বদলে FiAward ব্যবহার করা হয়েছে */}
+        <SidebarItem icon={<FiAward />} label="Challenges" isCollapsed={isCollapsed} to="/challenges" />
+        <SidebarItem icon={<FiUserPlus />} label="Find Matches" isCollapsed={isCollapsed} to="/findmatches" />
+        <SidebarItem icon={<FiBookmark />} label="Saved Posts" isCollapsed={isCollapsed} to="/saveposts" />
+
+        {/* Support Section */}
+        <SidebarSection label="Support" isCollapsed={isCollapsed} />
+        <SidebarItem icon={<FiCalendar />} label="Appointments" isCollapsed={isCollapsed} to="/appointments" />
+        <SidebarItem icon={<FiBriefcase />} label="Assessments" isCollapsed={isCollapsed} to="/assessments" />
+        <SidebarItem icon={<FiAlertCircle />} label="Crisis Resources" isCollapsed={isCollapsed} to="/crisisresources" />
+        <SidebarItem icon={<FiSearch />} label="Find Therapist" isCollapsed={isCollapsed} to="/findtherapist" />
+
+        {/* Settings Section */}
+        <SidebarSection label="Settings" isCollapsed={isCollapsed} />
+        <SidebarItem icon={<FiUser />} label="Profile" isCollapsed={isCollapsed} to="/profile" />
+        <SidebarItem icon={<FiSettings />} label="Account" isCollapsed={isCollapsed} to="/account" />
+        <SidebarItem icon={<FiBell />} label="Notifications" isCollapsed={isCollapsed} to="/notifications" />
+        <SidebarItem icon={<FiImage />} label="Photos" isCollapsed={isCollapsed} to="/photos" />
+        <SidebarItem icon={<FiLayers />} label="Integrations" isCollapsed={isCollapsed} to="/integrations" />
       </div>
 
       {/* Logout Footer */}
